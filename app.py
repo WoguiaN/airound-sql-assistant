@@ -54,10 +54,28 @@ Also the SQL code should not have ''' at the beginning or end.
 ## Streamlit App
 
 st.set_page_config(page_title="AiRound assistant.")
-st.header("Gemini App To Retrieve SQL Data")
+st.title("🤖 AiRound Agent ")
 
-question= st.text_input("Input: ",key='input')
-submit=st.button("Ask the question")
+st.markdown(
+"""
+Ask questions about your database in **natural language**.
+I will convert them into SQL queries.
+"""
+)
+
+icone_col, input_col = st.columns([0.5, 8])
+
+with icone_col:
+    st.image("https://cdn-icons-png.flaticon.com/512/4712/4712109.png", width=60)
+
+with input_col:
+    with st.form(key="query_form", clear_on_submit=False):
+        question = st.text_input(
+            "",
+            placeholder="Ask your database a question...",
+            label_visibility="collapsed"
+        )
+        submit = st.form_submit_button("Run")
 
 if submit:
     # by default , the submit button is false, and if a user clicks on it, it becomes True.
