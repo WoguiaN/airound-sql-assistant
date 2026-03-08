@@ -58,12 +58,12 @@ st.title("🤖 AiRound Agent ")
 
 st.markdown(
 """
-Ask questions about your database in **natural language**.
+Ask questions about your database in **natural language**.\n
 I will convert them into SQL queries.
 """
 )
 
-icone_col, input_col = st.columns([0.5, 8])
+icone_col, input_col = st.columns([1, 8])
 
 with icone_col:
     st.image("https://cdn-icons-png.flaticon.com/512/4712/4712109.png", width=60)
@@ -85,7 +85,7 @@ if submit:
         response = response.replace("```sql", "").replace("```", "").strip()
         print(response)
         if any(word in response.lower() for word in dangerous):
-            st.error("dangerous SQL query blocked ! ")
+            st.error("Dangerous SQL query blocked ! ")
         else:
             data = read_sql_query(response, "student.db")
             st.subheader("The response is ")
