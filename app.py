@@ -54,7 +54,7 @@ Also the SQL code should not have ''' at the beginning or end.
 ## Streamlit App
 
 st.set_page_config(page_title="AiRound assistant.")
-st.title("🤖 AiRound Agent ")
+st.title("🤖 AiRound Agent von Junior Woguia ")
 
 st.markdown(
 """
@@ -80,14 +80,22 @@ with input_col:
 if submit:
     # by default , the submit button is false, and if a user clicks on it, it becomes True.
     with st.spinner("Working..."):
-        response = get_gemini_response(question, prompt)
-        # Nettoyage du markdown généré par Gemini
-        response = response.replace("```sql", "").replace("```", "").strip()
-        print(response)
-        if any(word in response.lower() for word in dangerous):
-            st.error("Dangerous SQL query blocked ! ")
-        else:
-            data = read_sql_query(response, "student.db")
-            st.subheader("The response is ")
-            st.table(data)
-
+        try:
+            response = get_gemini_response(question, prompt)
+            # Nettoyage du markdown généré par Gemini
+            response = response.replace("```sql", "").replace("```", "").strip()
+            print(response)
+            ## security for the database records 
+            ## To do :  ask for rigths to update the database 
+            if any(word in response.lower() for word in dangerous):
+                 st.error("Dangerous SQL query blocked ! ")
+            else:
+                data = read_sql_query(response, "student.db")
+                if data:
+                    st.subheader("The response is ")
+                    st.table(data)
+                else :
+                    print("Not able to provide a response now, i need more training \n")
+        except Exception as e:
+            print(f"Error: {e}")
+            print ("I am not sure i understand your question , please try again with some other words \n")

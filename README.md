@@ -9,3 +9,4 @@ AI-powered SQL assistant built with:
 - SQLite
 
 Users can ask questions in natural language and retrieve SQL data automatically.
+PS: dont forget to create the .env file for the Gemini key 
